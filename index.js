@@ -4,6 +4,7 @@ const DotEnv = require('dotenv')
 const AuthRoutes = require('./routes/auth')
 const UserRoutes = require('./routes/user')
 const AdminRoutes = require('./routes/admin')
+const ProductRoutes = require('./routes/product')
 
 DotEnv.config()
 
@@ -21,8 +22,10 @@ const app = Express()
 app.use(Express.json())
 // call the routes
 app.use('/api/auth', AuthRoutes)
-app.use('/api/user', UserRoutes)
+app.use('/api/users', UserRoutes)
+app.use('/api/products' , ProductRoutes)
 app.use('/admin', AdminRoutes)
+
 
 app.listen(process.env.PORT || 5000, () => {
   console.log('app is running on ' + process.env.PORT)
