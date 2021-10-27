@@ -1,0 +1,29 @@
+const Express = require('express')
+const Mongoose = require('mongoose')
+const DotEnv = require('dotenv')
+const AuthRoutes = require('./routes/auth')
+const UserRoutes = require('./routes/user')
+const AdminRoutes = require('./routes/admin')
+
+DotEnv.config()
+
+// connect the database
+Mongoose.connect(process.env.MONGO_URL)
+  .then((res) => {
+    console.log('connected')
+  })
+  .catch((e) => {
+    console.log('not connected')
+  })
+
+const app = Express()
+// this allow you to parse json
+app.use(Express.json())
+// call the routes
+app.use('/api/auth', AuthRoutes)
+app.use('/api/user', UserRoutes)
+app.use('/admin', AdminRoutes)
+
+app.listen(process.env.PORT || 5000, () => {
+  console.log('app is running on ' + process.env.PORT)
+})
